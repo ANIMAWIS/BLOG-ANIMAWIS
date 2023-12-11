@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificação de Senha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: black;
+      color:white;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #error-message {
+      color: red;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Informe a Senha</h2>
+
+<form id="passwordForm">
+  <label for="password">Senha:</label>
+  <input type="password" id="password" required>
+  <button type="button" onclick="checkPassword()">Verificar Senha</button>
+</form>
+
+<p id="error-message"></p>
+<img src="../circulo.png" style="width: 600px;/"/>
+
+<script>
+  const correctPassword = 'BATATADOCE'; // Substitua com sua senha
+  let remainingAttempts = 3;
+
+  function checkPassword() {
+    const enteredPassword = document.getElementById('password').value;
+
+    if (enteredPassword === correctPassword) {
+      // Senha correta, redireciona para outra página
+      window.location.href = 'pagina1.html';
+    } else {
+      // Senha incorreta
+      remainingAttempts--;
+
+      if (remainingAttempts > 0) {
+        document.getElementById('error-message').innerHTML = `Senha incorreta. Tentativas restantes: ${remainingAttempts}`;
+      } else {
+        document.getElementById('error-message').innerHTML = 'Você atingiu o limite de tentativas. Tente novamente em 24 horas.';
+        document.getElementById('password').disabled = true;
+        document.querySelector('button').disabled = true;
+
+        // Aguarda 24 horas antes de reativar o formulário
+        setTimeout(() => {
+          document.getElementById('password').disabled = false;
+          document.querySelector('button').disabled = false;
+          document.getElementById('error-message').innerHTML = '';
+          remainingAttempts = 3;
+        }, 24 * 60 * 60 * 1000); // 24 horas em milissegundos
+      }
+    }
+  }
+</script>
+
+</body>
+</html>

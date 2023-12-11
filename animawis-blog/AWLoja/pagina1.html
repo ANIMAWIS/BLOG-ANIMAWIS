@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página 1 - Cadastro de Produtos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    label, input {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<form id="productForm">
+  <label for="productName">Nome do Produto:</label>
+  <input type="text" id="productName" required>
+
+  <label for="productPrice">Preço do Produto:</label>
+  <input type="number" id="productPrice" required>
+
+  <label for="productCategory">Categoria do Produto:</label>
+  <input type="text" id="productCategory" required>
+
+  <button type="button" onclick="addProduct()">Cadastrar Produto</button>
+</form>
+
+<script>
+  function addProduct() {
+    const productName = document.getElementById('productName').value;
+    const productPrice = document.getElementById('productPrice').value;
+    const productCategory = document.getElementById('productCategory').value;
+
+    const product = {
+      name: productName,
+      price: productPrice,
+      category: productCategory,
+    };
+
+    // Obtém a lista de produtos existente ou cria uma nova se não existir
+    const productList = JSON.parse(localStorage.getItem('productList')) || [];
+
+    // Adiciona o novo produto à lista
+    productList.push(product);
+
+    // Armazena a lista atualizada no armazenamento local
+    localStorage.setItem('productList', JSON.stringify(productList));
+
+    // Limpa os campos do formulário
+    document.getElementById('productName').value = '';
+    document.getElementById('productPrice').value = '';
+    document.getElementById('productCategory').value = '';
+
+    alert('Produto cadastrado com sucesso!');
+  }
+</script>
+
+</body>
+</html>
